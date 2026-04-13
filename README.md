@@ -59,16 +59,19 @@ If no image is provided, only text similarity is used.
 ---
 
 ## 5. How to Run
-1. Install the virtual environment
+1. Install dependencies
 ```bash
-source .venv/bin/activate
+pip3 install -r requirements.txt
 ```
-
-2. Start the application
+2. Initialize the database
 ```bash
-python app.py
+python3 init_db.py
 ```
-3. Open in browser
+3. Start the application
+```bash
+python3 app.py
+```
+4. Open in browser
 ```bash
 http://127.0.0.1:5050
 ```
