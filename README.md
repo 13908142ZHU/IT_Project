@@ -46,9 +46,6 @@ If no image is provided, only text similarity is used.
 - CSS
 - JavaScript
 
-**Backend**
-- Python (Flask)
-
 **Database**
 - SQLite
 
@@ -56,6 +53,9 @@ If no image is provided, only text similarity is used.
 - TensorFlow.js
 - Pre-trained Siamese Model
 
+**System Infrastructure**
+- Python (Flask)
+- SQLite
 ---
 
 ## 5. How to Run
