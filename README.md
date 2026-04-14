@@ -75,3 +75,22 @@ python3 app.py
 ```bash
 http://127.0.0.1:5050
 ```
+## 6. Viewing Model Training & Evaluation Results (Model Summary)
+
+The project includes a separate page that demonstrates how the Siamese neural network is trained and evaluated. It shows accuracy curves, loss curves, and confusion matrices for both the baseline (MobileNetV2) and the trained Siamese model.
+
+### How to run the model evaluation page
+
+1. **Make sure you are in the project root folder** (`IT_project/`).
+
+2. **Start a local HTTP server** (required because TensorFlow.js loads model files via fetch).  
+   - *Option A (easiest):* Open `matching_model_summary/model_evaluation.html` in VSCode, right‑click and select **“Open with Live Server”**.  
+   - *Option B:* Run `python -m http.server 8000` in the terminal, then visit `http://localhost:8000/matching_model_summary/model_evaluation.html`.
+
+3. **Wait 20–30 seconds** – the page will automatically:
+   - Load training images from GitHub.
+   - Train the Siamese network.
+   - Display the training loss/accuracy curves.
+   - Show confusion matrices for both MobileNetV2 and the Siamese model.
+
+> **Note:** The evaluation page runs entirely in the browser. No Flask backend is required. If the page does not load correctly, ensure you are using a local HTTP server (not opening the HTML file directly).
