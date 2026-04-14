@@ -94,3 +94,5 @@ The project includes a separate page that demonstrates how the Siamese neural ne
    - Show confusion matrices for both MobileNetV2 and the Siamese model.
 
 > **Note:** The evaluation page runs entirely in the browser. No Flask backend is required. If the page does not load correctly, ensure you are using a local HTTP server (not opening the HTML file directly).
+
+**💡 For detailed training logs (loss and accuracy per epoch), open the browser's Developer Tools (F12) and go to the Console tab.**
