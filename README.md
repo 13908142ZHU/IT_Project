@@ -50,6 +50,7 @@ If no image is provided, only text similarity is used.
 - SQLite
 
 **Image Processing**
+- JavaScript
 - TensorFlow.js
 - Pre-trained Siamese Model
 
