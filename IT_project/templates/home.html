@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.CSS') }}">
+</head>
+
+<body class="home-body">
+
+    <main class="home-shell">
+
+        <section class="home-phone-card">
+
+            <header class="home-topbar">
+                <div class="brand">/LOST&FOUND</div>
+                    
+                <!--The burger menu-->
+                <div class="menu-wrapper">
+                    <button class="menu-btn" id="menuToggle" type="button">☰</button>
+
+                    <div class="popup-menu" id="popupMenu">
+                        <a href="{{ url_for('home') }}">Home</a>
+                        <a href="{{ url_for('search_page') }}">Search</a>
+                        <a href="{{ url_for('post_page') }}">Post</a>
+                    </div>
+                </div>
+            </header>
+
+            <!--main part-->
+            <section class="home-hero">
+                <h1 style = "font-family: 'Roboto'; font-weight: 470; line-height: 1.0;">Find<br>Lost Items Faster & <br>Together.</h1>
+
+                <p class="hero-desc" style = "font-size: 15px; font-family: 'Roboto'; font-weight: 330; line-height: 1.4;">
+                    Upload description and keywords<br>to find your lost items, or help<br>others find their lost items.</p>
+
+
+            <div class="split-action">
+                <a href="{{ url_for('post_page') }}" class="split-left" style = "font-family: 'Roboto'; font-weight: 330;">Post</a>
+                <a href="{{ url_for('search_page') }}" class="split-right" style = "font-family: 'Roboto'; font-weight: 330;">Search</a>
+            </div>
+
+            </section>
+
+            <!--image slideshow-->
+            <section class="hero-image-section">
+                <!--Fade mask-->
+                <div class="image-fade-overlay"></div>
+                <img
+                    id="hero-slideshow"
+                    src="{{ url_for('static', filename='images/home1.jpg') }}"
+                    alt="Lost and found preview"
+                    class="hero-image"
+                >
+            </section>
+
+        </section>
+    </main>
+
+
+    <script>
+        const slideshowImages = [
+            "{{ url_for('static', filename='images/home1.jpg') }}",
+            "{{ url_for('static', filename='images/home2.jpg') }}",
+            "{{ url_for('static', filename='images/home3.jpg') }}"
+        ];
+    </script>
+    
+    <!--Import external JavaScript file-->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
