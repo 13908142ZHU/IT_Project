@@ -62,24 +62,25 @@ const largeViewBtn = document.getElementById("largeViewBtn");
 const smallViewBtn = document.getElementById("smallViewBtn");
 
 //When user click
-largeViewBtn.addEventListener("click", () => {
-    //Remove the class of compact view
-    resultsContainer.classList.remove("compact-view");
-    //Add the class of large view
-    resultsContainer.classList.add("large-view");
-    //Highlight large view button
-    largeViewBtn.classList.add("active");
-    //Remove Highlight of small view buttion
-    smallViewBtn.classList.remove("active");
-});
+if (largeViewBtn && smallViewBtn && resultsContainer){
+    largeViewBtn.addEventListener("click", () => {
+        //Remove the class of compact view
+        resultsContainer.classList.remove("compact-view");
+        //Add the class of large view
+        resultsContainer.classList.add("large-view");
+        //Highlight large view button
+        largeViewBtn.classList.add("active");
+        //Remove Highlight of small view buttion
+        smallViewBtn.classList.remove("active");
+    });
 
-smallViewBtn.addEventListener("click", () => {
-    resultsContainer.classList.remove("large-view");
-    resultsContainer.classList.add("compact-view");
-    smallViewBtn.classList.add("active");
-    largeViewBtn.classList.remove("active");
-});
-
+    smallViewBtn.addEventListener("click", () => {
+        resultsContainer.classList.remove("large-view");
+        resultsContainer.classList.add("compact-view");
+        smallViewBtn.classList.add("active");
+        largeViewBtn.classList.remove("active");
+    });
+}
 
 
 //Modal Detail View. When clicking the result card, Show detailed information.
@@ -93,50 +94,52 @@ const modalContact = document.getElementById("modalContact");
 const modalScore = document.getElementById("modalScore");
 const resultCards = document.querySelectorAll(".result-card");
 
-resultCards.forEach(card => {
-    card.addEventListener("click", () => {
-        
-        //Get source of the image, title, description(with default value) and contact way(with default calue)of the card 
-        modalImage.src = card.dataset.image;
-        modalTitle.textContent = card.dataset.title;
-        modalDescription.textContent = card.dataset.description || "No description";
-        modalContact.textContent = card.dataset.contact || "No contact information";
+if(modal && closeModal){
+    resultCards.forEach(card => {
+        card.addEventListener("click", () => {
+            
+            //Get source of the image, title, description(with default value) and contact way(with default calue)of the card 
+            modalImage.src = card.dataset.image;
+            modalTitle.textContent = card.dataset.title;
+            modalDescription.textContent = card.dataset.description || "No description";
+            modalContact.textContent = card.dataset.contact || "No contact information";
 
-        //Process the score
-        const finalScore = parseFloat(card.dataset.score || "0");
-        modalScore.textContent = `${(finalScore * 100).toFixed(1)}%`;
+            //Process the score
+            const finalScore = parseFloat(card.dataset.score || "0");
+            modalScore.textContent = `${(finalScore * 100).toFixed(1)}%`;
 
-        //Search element of class = "keywords-line" in current card
-        const keywordsLine = card.querySelector(".keywords-line");
-        if (keywordsLine) {
-            // Copy the keywords data from the card to keywords region after cleaning
-            modalKeywords.innerHTML = keywordsLine.innerHTML.replace("<strong>Keywords:</strong>", "").trim();
-        } else {
-            modalKeywords.textContent = card.dataset.keywords || "";
-        }
+            //Search element of class = "keywords-line" in current card
+            const keywordsLine = card.querySelector(".keywords-line");
+            if (keywordsLine) {
+                // Copy the keywords data from the card to keywords region after cleaning
+                modalKeywords.innerHTML = keywordsLine.innerHTML.replace("<strong>Keywords:</strong>", "").trim();
+            } else {
+                modalKeywords.textContent = card.dataset.keywords || "";
+            }
 
-        modal.style.display = "flex";
+            modal.style.display = "flex";
+        });
     });
-});
 
-//Two ways to close the modal
-//First, click the close button
-closeModal.addEventListener("click", () => {
-    modal.style.display = "none";
-});
-
-//Second, click the background of the modal
-window.addEventListener("click", (e) => {
-    if (e.target === modal) {
+    //Two ways to close the modal
+    //First, click the close button
+    closeModal.addEventListener("click", () => {
         modal.style.display = "none";
-    }
-});
+    });
+
+    //Second, click the background of the modal
+    window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+}
 
 // Home image slideshow
 document.addEventListener("DOMContentLoaded", function () {
     const heroImage = document.getElementById("hero-slideshow");
 
-    if (heroImage && typeof slideshowImages !== "undefined" && slideshowImages.length > 1) {
+    if (heroImage && window.slideshowImages && window.slideshowImages.length > 1) {
         let currentIndex = 0;
 
         // Fade out
