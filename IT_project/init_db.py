@@ -19,5 +19,3 @@ CREATE TABLE items (
 
 conn.commit()
 conn.close()
-
-print("Database initialized.")
