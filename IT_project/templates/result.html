@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.CSS') }}">
+</head>
+<body>
+    <header class="home-topbar">
+        <div class="brand">/<span class="highlighted_search">LOST</span>&FOUND</div>
+
+        <div class="menu-wrapper">
+            <button class="menu-btn" id="menuToggle" type="button">☰</button>
+
+            <div class="popup-menu" id="popupMenu">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('search_page') }}">Search</a>
+                <a href="{{ url_for('post_page') }}">Post</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container results-page">
+        <div class="results-toolbar">
+            {% if search_image_url %}
+            <img id="query-image" src="{{ search_image_url }}" alt="query image" style="display:none;">
+            {% endif %}
+
+            <div>
+                <h2>Matched Items</h2>
+            </div>
+
+            <!--Switch view mode-->
+            <div class="view-toggle">
+                <button id="largeViewBtn" class="active" type="button">Large View</button>
+                <button id="smallViewBtn" type="button">Compact View</button>
+            </div>
+        </div>
+
+        <!--Show results if have-->
+        {% if results %}
+        <!--The result container to store all matched cards-->
+        <div
+            id="results-container"
+            class="results-container large-view"
+            data-has-query-text="{{ 'true' if has_query_text else 'false' }}"
+            data-has-query-image="{{ 'true' if has_query_image else 'false' }}"
+        >
+
+            <!--iterate all matched results-->
+            {% for item in results %}
+            <div
+                class="result-card"
+                data-title="{{ item.title }}"
+                data-description="{{ item.description }}"
+                data-keywords="{{ item.keywords }}"
+                data-contact="{{ item.contact }}"
+                data-score="{{ item.score }}"
+                data-text-score="{{ item.text_score }}"
+                data-image="{{ url_for('uploaded_file', filename=item.image_path.split('/')[-1] if item.image_path else '') }}"
+            >
+
+                <!--Image-->
+                <img
+                    src="{{ url_for('uploaded_file', filename=item.image_path.split('/')[-1] if item.image_path else '') }}"
+                    alt="item image"
+                    class="result-image"
+                >
+
+                <div class="result-info">
+                    <!--title-->
+                    <h3>{{ item.title }}</h3>
+
+                    <!--Highlighted Keywords line-->
+                    <p class="keywords-line">
+                        <strong>Keywords:</strong>
+                        {{ item.highlighted_keywords|safe }}
+                    </p>
+
+                    <!--Match Score-->
+                    {% if has_query_image %}
+                    <p class="score-badge">Match Score: --</p>
+                    {% else %}
+                    <p class="score-badge">Match Score: {{ (item.score * 100) | round(1) }}%</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!--Reminders of no results after filtering-->
+        <div id="dynamic-no-results" class="no-results" style="display:none;">
+            <h1>No Matching Items</h1>
+            <p>Try to use different keywords, or upload an image for better matching.</p>
+        </div>
+        {% else %}
+        <!--Reminders of no searching results-->
+        <div class="no-results">
+            <h1>No Matching Items</h1>
+            <p>Try to use different keywords, or upload an image for better matching.</p>
+        </div>
+        {% endif %}
+        
+    </main>
+
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close-btn">&times;</span>
+            <img id="modalImage" class="modal-image" src="" alt="item image">
+            <h2 id="modalTitle"></h2>
+            <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+            <p><strong>Keywords:</strong> <span id="modalKeywords"></span></p>
+            <p><strong>Contact:</strong> <span id="modalContact"></span></p>
+            <p><strong>Match Score:</strong> <span id="modalScore"></span></p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0"></script>
+    <script src="{{ url_for('static', filename='model_prediction.js') }}"></script>
+</body>
+</html>
